@@ -59,7 +59,7 @@ project repository that points to this guide, for example:
 ```markdown
 # Agent instructions
 All PLC code in this repository follows the PLC Programming Style Guide:
-https://github.com/<owner>/plc-styleguide
+https://github.com/mil-as/plc-styleguide
 Read docs/ and rules/naming.yaml before writing or reviewing code.
 When you flag a violation, cite the rule ID (e.g. NAM-POU-002).
 ```
