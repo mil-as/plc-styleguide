@@ -1,0 +1,161 @@
+# Machine-readable naming rules for the PLC Programming Style Guide.
+# Keep in sync with docs/. Patterns are anchored regular expressions.
+# Status: DRAFT
+
+version: 0.1.0
+language: en
+
+casing:
+  lowerCamelCase: '^[a-z][a-zA-Z0-9]*$'
+  PascalCase: '^[A-Z][a-zA-Z0-9]*$'
+  UPPER_SNAKE_CASE: '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'
+
+general:
+  allowedCharacters: '^[A-Za-z][A-Za-z0-9_]*$'   # NAM-GEN-004
+  maxLength: 32                                   # NAM-GEN-006 (recommendation)
+  forbiddenHungarianPrefixes:                     # NAM-GEN-003
+    - { pattern: '^(b|x|n|i|f|r|lr|s|ws|w|dw|t|e|st|arr|a)[A-Z]', note: 'data-type prefix' }
+
+elements:
+  - id: NAM-POU-002
+    element: functionBlock
+    prefix: fb
+    pattern: '^fb[A-Z][a-zA-Z0-9]*$'
+    examples: [fbMotorController, fbAnalogSignal]
+  - id: NAM-POU-003
+    element: function
+    prefix: fc
+    pattern: '^fc[A-Z][a-zA-Z0-9]*$'
+    examples: [fcScaleAnalog]
+  - id: NAM-POU-004
+    element: program
+    prefix: prg
+    pattern: '^prg[A-Z][a-zA-Z0-9]*$'
+    examples: [prgMain]
+  - id: NAM-POU-005
+    element: organizationBlock
+    platforms: [tia]
+    prefix: ob
+    pattern: '^ob[A-Z][a-zA-Z0-9]*$'
+    examples: [obMain, obStartup]
+  - id: NAM-POU-006
+    element: interface
+    prefix: itf
+    pattern: '^itf[A-Z][a-zA-Z0-9]*$'
+    examples: [itfMotor]
+  - id: NAM-POU-007
+    element: [method, property, action]
+    prefix: null
+    pattern: '^[A-Z][a-zA-Z0-9]*$'
+    examples: [Reset, MoveAbsolute, IsReady]
+  - id: NAM-TYP-001
+    element: structure
+    prefix: type
+    pattern: '^type[A-Z][a-zA-Z0-9]*$'
+    examples: [typeMotorConfig]
+  - id: NAM-TYP-002
+    element: enumeration
+    prefix: enum
+    pattern: '^enum[A-Z][a-zA-Z0-9]*$'
+    examples: [enumMachineState]
+  - id: NAM-TYP-003
+    element: enumerationValue
+    pattern: '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'
+    examples: [RUNNING, WAIT_FOR_PART]
+  - id: NAM-TYP-004
+    element: union
+    prefix: union
+    pattern: '^union[A-Z][a-zA-Z0-9]*$'
+  - id: NAM-TYP-004
+    element: alias
+    prefix: alias
+    pattern: '^alias[A-Z][a-zA-Z0-9]*$'
+  - id: NAM-VAR-001
+    element: [inputParameter, outputParameter, inOutParameter]
+    prefix: null
+    pattern: '^[a-z][a-zA-Z0-9]*$'
+    examples: [enable, done, speedSetpoint]
+  - id: NAM-VAR-002
+    element: temporaryVariable
+    prefix: temp
+    pattern: '^temp[A-Z][a-zA-Z0-9]*$'
+    examples: [tempIndex]
+  - id: NAM-VAR-003
+    element: staticVariable
+    prefix: stat
+    pattern: '^stat[A-Z][a-zA-Z0-9]*$'
+    examples: [statStep]
+  - id: NAM-VAR-004
+    element: externalStaticVariable
+    prefix: ext
+    pattern: '^ext[A-Z][a-zA-Z0-9]*$'
+    examples: [extHmiCommand]
+  - id: NAM-VAR-005
+    element: functionBlockInstance
+    prefix: inst
+    pattern: '^inst[A-Z][a-zA-Z0-9]*$'
+    examples: [instMotorA, instStartDelay, instMotors]
+  - id: NAM-VAR-006
+    element: constant
+    pattern: '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'
+    examples: [MAX_MOTORS, ERR_TIMEOUT]
+  - id: NAM-VAR-008
+    element: pointer
+    prefix: ptr
+    pattern: '^ptr[A-Z][a-zA-Z0-9]*$'
+  - id: NAM-VAR-008
+    element: reference
+    prefix: ref
+    pattern: '^ref[A-Z][a-zA-Z0-9]*$'
+  - id: NAM-GLB-001
+    element: globalVariableList
+    platforms: [twincat, codesys]
+    prefix: gvl
+    pattern: '^gvl[A-Z][a-zA-Z0-9]*$'
+    examples: [gvlMachine, gvlIo]
+  - id: NAM-GLB-002
+    element: globalDataBlock
+    platforms: [tia]
+    prefix: null
+    pattern: '^[A-Z][a-zA-Z0-9]*$'
+    examples: [Machine, HmiInterface]
+  - id: NAM-GLB-003
+    element: globalVariable
+    prefix: null
+    pattern: '^[a-z][a-zA-Z0-9]*$'
+  - id: NAM-GLB-005
+    element: libraryElementWithoutNamespace
+    platforms: [tia, sysmac]
+    pattern: '^[A-Z][a-zA-Z0-9]{0,11}_[a-z]+[A-Z][a-zA-Z0-9]*$'
+    examples: [MotionBase_fbAxis]
+  - id: NAM-GLB-006
+    element: singleInstanceDataBlock
+    platforms: [tia]
+    prefix: inst
+    pattern: '^inst[A-Z][a-zA-Z0-9]*$'
+  - id: NAM-GLB-007
+    element: task
+    prefix: task
+    pattern: '^task[A-Z][a-zA-Z0-9]*$'
+    examples: [taskMain]
+  - id: NAM-HWI-001
+    element: hardwareModule
+    pattern: '^[A-Z]+[0-9]+_[A-Za-z0-9]+$'
+    examples: [A12_EL1008, U21_ConveyorDrive]
+  - id: NAM-HWI-002
+    element: physicalIo
+    prefixes: { digitalInput: di, digitalOutput: do, analogInput: ai, analogOutput: ao }
+    pattern: '^(di|do|ai|ao)[A-Z][a-zA-Z0-9]*$'
+    examples: [diPartPresent, doConveyorRun, aiTankLevel]
+  - id: NAM-HWI-005
+    element: fieldbusProcessData
+    prefix: io
+    pattern: '^io[A-Z][a-zA-Z0-9]*$'
+    examples: [ioRobotIn]
+
+booleans:                                    # NAM-GEN-009
+  statePrefixes: [is, has, can, should]
+  plcopenNames: [enable, execute, done, busy, error, valid, commandAborted, reset]
+
+arrays:                                      # NAM-GEN-008
+  plural: true
