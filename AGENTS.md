@@ -54,8 +54,13 @@ Read that section before adding or changing a rule. Summary:
 
 ## B. You are writing or reviewing PLC code in another repository
 
-1. Read `README.md` (quick reference), then the relevant `docs/` files.
-   `rules/naming.yaml` contains the exact patterns.
+1. The guide is not stored in your repository. Read it from GitHub,
+   branch `main`:
+   `https://raw.githubusercontent.com/mil-as/plc-styleguide/main/<path>`.
+   Start with `README.md` (quick reference), then `rules/naming.yaml` (exact
+   patterns) and the `docs/` file for the element you are naming. Do not
+   look for a local copy (such as `styleguide/`) and do not copy the guide
+   into the project.
 2. Apply the rules to every new or changed identifier. Do not rename existing
    identifiers outside the scope of your task unless asked.
 3. When reporting a violation, cite the rule ID, e.g.
@@ -72,8 +77,13 @@ Read that section before adding or changing a rule. Summary:
 - Methods and properties: `PascalCase`, no prefix (`Reset()`, `IsReady`).
 - FB types `fb`, functions `fc`, programs `prg`, interfaces `itf`,
   structures `type`, enumerations `enum`, unions `union`, aliases `alias`.
+- TwinCAT's default `MAIN` becomes `prgMain` in new projects. In existing
+  projects, keep `MAIN` unless asked to rename it (NAM-POU-004).
 - Every FB instance `inst` (including timers/triggers: `instStartDelay`).
 - Inputs, outputs and in-outs: no prefix.
+- Standard FB status parameters (NAM-VAR-011): `execute`, `enable`, `reset`,
+  `done`, `valid`, `busy`, `active`, `commandAborted`, `error`, `errorId`,
+  `warning`, `warningId`, `status`. Never `bError`, `nErrorId`, `ErrorID`.
 - `VAR_TEMP` → `temp`, internal `VAR` in FBs → `stat`, statics read/written by
   HMI/SCADA → `ext`.
 - Booleans that describe a state start with `is`, `has`, `can`

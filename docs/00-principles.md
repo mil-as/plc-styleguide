@@ -130,9 +130,12 @@ One or two sentences stating the rule precisely.
 | Rationale | yes for `Rule` | Why the rule exists |
 | Platform notes | optional | Platform differences |
 
-Naming rules also have an entry with the same ID in
-[rules/naming.yaml](../rules/naming.yaml). The Markdown and the YAML must
-always agree.
+Naming rules that define a name pattern or a fixed list of names also have
+an entry with the same ID in [rules/naming.yaml](../rules/naming.yaml). The
+Markdown and the YAML must always agree, and each ID appears in the YAML at
+most once. Rules that cannot be checked from a name alone (for example
+NAM-VAR-007 *No magic numbers*) exist only in Markdown, so the YAML has gaps
+in its IDs.
 
 ### Citing rules
 Refer to a rule by its ID, optionally followed by its title:

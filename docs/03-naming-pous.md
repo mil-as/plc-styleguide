@@ -54,8 +54,17 @@ and from data types at the call site and in the project tree.
 |---|---|
 | `prgMain`, `prgConveyorLine` | `MAIN`, `P_Conveyor` |
 
-**Platform notes:** TIA Portal has no `PROGRAM` POU; organization blocks use
-`ob` (NAM-POU-005). Sysmac programs are named the same way.
+**Platform notes:**
+- **TwinCAT / CODESYS** create a program named `MAIN` in every new PLC
+  project. In a new project, rename it to `prgMain` (NAM-GEN-010), then check
+  that the PLC task still calls `prgMain` and build.
+- In an existing or deployed project, keep `MAIN` unless the rename is
+  planned. The program name is part of every ADS and OPC UA symbol path
+  (`MAIN.instMotorA.busy`), so renaming it breaks HMI, SCADA and test clients
+  that use those paths. Mark the kept name with a deviation comment in its
+  declaration: `// Deviation NAM-POU-004: MAIN kept, symbol paths used by HMI`.
+- **TIA Portal** has no `PROGRAM` POU; organization blocks use `ob`
+  (NAM-POU-005). **Sysmac** programs are named the same way as in TwinCAT.
 
 ### NAM-POU-005 – TIA organization blocks use the prefix `ob`
 - **Level:** Rule
@@ -95,6 +104,7 @@ prefix adds no information.
 - **Applies to:** asynchronous FBs
 - **Status:** Draft
 
-Blocks that run over several cycles use the standard PLCopen parameter
-names: inputs `enable` or `execute`; outputs `valid`/`done`, `busy`,
-`error`, `status`, `commandAborted`.
+Blocks that run over several cycles use either the `execute` pattern
+(`execute` → `done`) or the `enable` pattern (`enable` → `valid`), together
+with `busy` and `error`/`errorId`. The full list of standard parameter
+names is in NAM-VAR-011.

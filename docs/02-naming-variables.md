@@ -143,3 +143,45 @@ be used (dereferencing, validity checks), so marking them prevents errors.
 | `motorConfig.maxSpeed` | `motorConfig.statMaxSpeed` |
 
 Exception: FB instances inside a structure keep `inst`.
+
+### NAM-VAR-011 – Standard status parameters use PLCopen names
+- **Level:** Rule
+- **Applies to:** `VAR_INPUT` and `VAR_OUTPUT` of function blocks
+- **Status:** Draft
+
+When a function block has a parameter with one of the meanings below, it
+uses exactly this name. No prefix, no data type letter and no synonyms
+(`ready`, `finished`, `fault`, `alarm`, `errCode`).
+
+| Name | Section | Meaning |
+|---|---|---|
+| `execute` | input | Starts the job on a rising edge |
+| `enable` | input | Runs the block while `TRUE` |
+| `reset` | input | Acknowledges an error and returns the block to idle (rising edge) |
+| `done` | output | The job started by `execute` has finished successfully |
+| `valid` | output | The outputs of a block controlled by `enable` are valid |
+| `busy` | output | The job is in progress and not yet finished |
+| `active` | output | The block currently has control of the process or axis |
+| `commandAborted` | output | The job was interrupted by another command |
+| `error` | output | An error is active |
+| `errorId` | output | Error code; `0` when `error` is `FALSE` |
+| `warning` | output | A warning is active; the block keeps running |
+| `warningId` | output | Warning code; `0` when `warning` is `FALSE` |
+| `status` | output | Detailed state for diagnostics, for example the state enumeration |
+
+| Correct | Incorrect |
+|---|---|
+| `error`, `errorId`, `busy`, `done` | `bError`, `nErrorId`, `ErrorID`, `errorID`, `isBusy`, `fault` |
+
+`Id` is written like a word (NAM-GEN-007), so the name is `errorId`, not
+`errorID`. Internal state that is not a parameter follows the normal rules
+(`statState`, NAM-GEN-009).
+
+**Rationale:** PLCopen and the standard libraries of all four platforms use
+these names, so programmers, operators and AI agents recognise a block's
+interface immediately. They replace the Hungarian names (`bError`, `bBusy`)
+that NAM-GEN-003 forbids.
+
+**Platform notes:** Vendor blocks keep their declared names
+(`instPower.ErrorID` in TwinCAT, `#instMove.Status` in TIA Portal). This
+rule applies to blocks you write.

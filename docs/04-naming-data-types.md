@@ -55,12 +55,19 @@ Usage: `statState := enumMachineState.RUNNING;`
 **Platform notes:** In TwinCAT/CODESYS always use `qualified_only` so values
 are written with the type name. In TIA: `enumMachineState#RUNNING`.
 
-### NAM-TYP-004 – Unions and aliases use `union` and `alias`
+### NAM-TYP-004 – Unions use the prefix `union`
 - **Level:** Rule
-- **Applies to:** `UNION`, alias types
+- **Applies to:** `UNION`
 - **Status:** Draft
 
-`unionWordBits`, `aliasMotorSpeed`.
+| Correct | Incorrect |
+|---|---|
+| `unionWordBits` | `U_WordBits`, `WordBits` |
+
+**Rationale:** Same as for structures: the type is clearly a data type and
+cannot be confused with a variable.
+
+This rule used to cover aliases as well; aliases are now NAM-TYP-006.
 
 ### NAM-TYP-005 – Variables of a type are named after their role
 - **Level:** Rule
@@ -70,3 +77,15 @@ are written with the type name. In TIA: `enumMachineState#RUNNING`.
 | Correct | Incorrect |
 |---|---|
 | `feederConfig : typeMotorConfig;` | `typeMotorConfig1 : typeMotorConfig;`, `stMotorConfig : typeMotorConfig;` |
+
+### NAM-TYP-006 – Aliases use the prefix `alias`
+- **Level:** Rule
+- **Applies to:** alias types (`TYPE aliasX : <base type>; END_TYPE`)
+- **Status:** Draft
+
+| Correct | Incorrect |
+|---|---|
+| `TYPE aliasMotorSpeed : LREAL; END_TYPE` | `T_MotorSpeed`, `MotorSpeed` |
+
+**Rationale:** Same as for structures: the type is clearly a data type and
+cannot be confused with a variable.

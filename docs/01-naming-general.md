@@ -53,6 +53,9 @@ Do not encode the data type in the name. Prefixes in this guide describe the
 |---|---|
 | `isStarted`, `partCount`, `speedSetpoint`, `recipeName` | `bStarted`, `nPartCount`, `fSpeedSetpoint`, `sRecipeName` |
 
+For the standard status parameters of function blocks (`error`, `errorId`,
+`busy`, `done`, ...) use the names listed in NAM-VAR-011.
+
 **Rationale:** Data types change; names should not have to. The IDE shows the
 type when needed.
 
@@ -135,8 +138,9 @@ names (`enable`, `execute`, `reset`, `start`).
 |---|---|
 | `isRunning`, `hasError`, `canStart` | `running?`, `errorFlag`, `bRun` |
 
-**Platform notes:** Standard PLCopen interface names (`enable`, `execute`,
-`done`, `busy`, `error`, `valid`, `commandAborted`) are kept as they are.
+**Platform notes:** The standard status parameter names in NAM-VAR-011
+(`done`, `busy`, `error`, `valid`, ...) are kept as they are and do not get
+`is`/`has`.
 
 ### NAM-GEN-010 – Default names from the engineering tool are replaced
 - **Level:** Rule
@@ -144,4 +148,5 @@ names (`enable`, `execute`, `reset`, `start`).
 - **Status:** Draft
 
 Placeholder names created by the engineering tool (`PLC_1`, `Block_1`,
-`Untitled1`, `Box 1`, `Term 2`, `PlcTask`) are replaced with meaningful names.
+`Untitled1`, `Box 1`, `Term 2`, `PlcTask`, `MAIN`) are replaced with
+meaningful names. For `MAIN` in existing projects, see NAM-POU-004.

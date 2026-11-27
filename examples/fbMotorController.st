@@ -1,5 +1,5 @@
 // Example: function block following the style guide (TwinCAT 3 / CODESYS ST)
-// Rules shown: NAM-VAR-001..006, NAM-POU-002, NAM-POU-007, NAM-POU-008, NAM-TYP-002
+// Rules shown: NAM-VAR-001..006, NAM-VAR-011, NAM-POU-002, NAM-POU-007, NAM-POU-008, NAM-TYP-002
 
 FUNCTION_BLOCK fbMotorController
 VAR_INPUT
@@ -11,7 +11,7 @@ VAR_OUTPUT
     valid           : BOOL;     // Outputs are valid
     busy            : BOOL;     // Controller is active
     error           : BOOL;     // Error is active
-    status          : WORD;     // Status / error code
+    errorId         : WORD;     // Error code, 0 = no error
     speedActual     : LREAL;    // Actual speed [rpm]
 END_VAR
 VAR_IN_OUT
@@ -49,7 +49,7 @@ CASE statState OF
         IF drive.isRunning THEN
             statState := enumMotorState.RUNNING;
         ELSIF instStartDelay.Q THEN
-            status := ERR_NO_FEEDBACK;
+            errorId := ERR_NO_FEEDBACK;
             statState := enumMotorState.ERROR;
         END_IF
 
@@ -60,7 +60,7 @@ CASE statState OF
 
     enumMotorState.ERROR:
         IF tempIsResetRise THEN
-            status := 16#0000;
+            errorId := 16#0000;
             statState := enumMotorState.IDLE;
         END_IF
 

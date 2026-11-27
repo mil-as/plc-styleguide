@@ -53,19 +53,39 @@ Prefixes describe the **kind of element or its scope**, not its data type.
 
 ## Using this guide in a PLC project
 
-Add a short `AGENTS.md` (and a `CLAUDE.md` containing `@AGENTS.md`) to the PLC
-project repository that points to this guide, for example:
+PLC projects read the guide **directly from GitHub, branch `main`**. Do not
+copy the guide into the PLC project or add it as a submodule. There is one
+copy, and every project uses the current rules (see
+[decisions/0006](decisions/0006-guide-read-from-github.md)).
+
+Add this `AGENTS.md` to the PLC project repository (and a `CLAUDE.md` that
+contains only `@AGENTS.md`):
 
 ```markdown
 # Agent instructions
-All PLC code in this repository follows the PLC Programming Style Guide:
-https://github.com/mil-as/plc-styleguide
-Read docs/ and rules/naming.yaml before writing or reviewing code.
+
+All PLC code in this repository follows the PLC Programming Style Guide.
+The guide is NOT stored in this repository; there is no local copy.
+Read it from GitHub, branch `main`:
+
+- Repository: https://github.com/mil-as/plc-styleguide
+- Raw files:  https://raw.githubusercontent.com/mil-as/plc-styleguide/main/<path>
+
+Before writing or reviewing PLC code, read:
+1. README.md – quick reference
+2. AGENTS.md – section B
+3. rules/naming.yaml – exact name patterns
+4. The docs/ file for the element you are naming (listed in README.md)
+
 When you flag a violation, cite the rule ID (e.g. NAM-POU-002).
+The project deviations below take precedence over the guide (GEN-PRI-002).
+
+## Project deviations
+- None
 ```
 
-Alternatively, add this repo as a git submodule (e.g. `styleguide/`) so agents
-can read the rules locally.
+To freeze the rules for a delivered project, replace `main` in the raw URL
+with a release tag or commit hash.
 
 ## Scope
 

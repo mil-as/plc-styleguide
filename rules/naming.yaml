@@ -1,8 +1,13 @@
 # Machine-readable naming rules for the PLC Programming Style Guide.
 # Keep in sync with docs/. Patterns are anchored regular expressions.
 # Status: DRAFT
+#
+# Only rules that define a name pattern or a fixed list of names are listed
+# here, and each rule ID appears at most once. Rules that cannot be checked
+# from a name alone exist only in docs/, so gaps in the IDs are expected,
+# for example NAM-VAR-007 (no magic numbers) or NAM-HWI-003.
 
-version: 0.1.0
+version: 0.2.0
 language: en
 
 casing:
@@ -66,10 +71,12 @@ elements:
     element: union
     prefix: union
     pattern: '^union[A-Z][a-zA-Z0-9]*$'
-  - id: NAM-TYP-004
+    examples: [unionWordBits]
+  - id: NAM-TYP-006
     element: alias
     prefix: alias
     pattern: '^alias[A-Z][a-zA-Z0-9]*$'
+    examples: [aliasMotorSpeed]
   - id: NAM-VAR-001
     element: [inputParameter, outputParameter, inOutParameter]
     prefix: null
@@ -99,14 +106,18 @@ elements:
     element: constant
     pattern: '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$'
     examples: [MAX_MOTORS, ERR_TIMEOUT]
+  # NAM-VAR-007 (no magic numbers) is a code rule without a name pattern.
   - id: NAM-VAR-008
-    element: pointer
-    prefix: ptr
-    pattern: '^ptr[A-Z][a-zA-Z0-9]*$'
-  - id: NAM-VAR-008
-    element: reference
-    prefix: ref
-    pattern: '^ref[A-Z][a-zA-Z0-9]*$'
+    element: [pointer, reference]
+    prefixes: { pointer: ptr, reference: ref }
+    pattern: '^(ptr|ref)[A-Z][a-zA-Z0-9]*$'
+    examples: [ptrBuffer, refAxis]
+  - id: NAM-VAR-011
+    element: standardStatusParameter
+    names:
+      inputs: [execute, enable, reset]
+      outputs: [done, valid, busy, active, commandAborted, error, errorId, warning, warningId, status]
+    incorrect: [bError, bBusy, bDone, nErrorId, ErrorID, errorID, isBusy, fault]
   - id: NAM-GLB-001
     element: globalVariableList
     platforms: [twincat, codesys]
@@ -155,7 +166,7 @@ elements:
 
 booleans:                                    # NAM-GEN-009
   statePrefixes: [is, has, can, should]
-  plcopenNames: [enable, execute, done, busy, error, valid, commandAborted, reset]
+  plcopenNames: [enable, execute, reset, done, valid, busy, active, commandAborted, error, warning]  # NAM-VAR-011
 
 arrays:                                      # NAM-GEN-008
   plural: true
